@@ -198,12 +198,18 @@
                 };
 
                 ws.onmessage = function (evt) {
-                    _this.msg.push(evt.data)
+                    if (evt.data !== 'ping') {
+                        _this.msg.push(evt.data)
+                    }
                 };
 
                 ws.onclose = function (evt) {
                     _this.connect = false
                 };
+
+                setInterval(()=>{
+                    ws.send('ping')
+                },5*1000)
             },
             components: {
                 jsonView: window['vue-json-view'].default
